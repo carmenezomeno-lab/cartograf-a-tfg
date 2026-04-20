@@ -12,14 +12,14 @@ let sonidoCirculo;
 const PLANO_ORIGINAL_ANCHO = 300;
 const PLANO_ORIGINAL_ALTO = 200;
 
-const DESPLAZAMIENTO_X = 10;
-const DESPLAZAMIENTO_Y = 2;
+const DESPLAZAMIENTO_X = 25;
+const DESPLAZAMIENTO_Y = 5;
 
-const UI_PADDING = 12;
-const BOTON_ALTO = 22;
-const BOTON_MARGEN = 6;
-const BOTON_RADIO = 7;
-const PANEL_ANCHO_MAX = 330;
+const UI_PADDING = 14;
+const BOTON_ALTO = 28;
+const BOTON_MARGEN = 8;
+const BOTON_RADIO = 9;
+const PANEL_ANCHO_MAX = 380;
 
 const COLUMNAS_CSV = {
   genero: 0,
@@ -89,7 +89,7 @@ function setup() {
   ellipseMode(CENTER);
   rectMode(CORNER);
   textFont("Arial");
-  textSize(12);
+  textSize(13);
 
   particulas = parsearCSV(filasCSV);
   inicializarFiltros();
@@ -358,13 +358,14 @@ function actualizarParticulasVisibles() {
 function dibujarPanelFiltros() {
   noStroke();
   fill(255, 235);
-  rect(8, 8, min(plano.width - 16, 580), 112, 10);
+  rect(8, 8, min(plano.width - 16, 720), 148, 12);
 
   for (const boton of botonesFiltro) {
     if (boton.esTitulo) {
       fill(45);
       textAlign(LEFT, CENTER);
       textStyle(BOLD);
+      textSize(13);
       text(boton.etiqueta, boton.x, boton.y + boton.h / 2);
       textStyle(NORMAL);
       continue;
@@ -384,7 +385,7 @@ function dibujarPanelFiltros() {
 
     fill(boton.activa ? 255 : 50);
     textAlign(LEFT, CENTER);
-    textSize(11);
+    textSize(13);
     text(boton.etiqueta, boton.x + 8, boton.y + boton.h / 2);
   }
 }
@@ -418,10 +419,10 @@ function dibujarManchasSuaves(particulaActiva) {
     const grupo = grupos[emocion];
     if (grupo.length < 2) continue;
 
-    let alpha = 25 + sin(frameCount * 0.02 + grupo.length) * 6;
+    let alpha = 20 + sin(frameCount * 0.02 + grupo.length) * 20;
 
     if (particulaActiva && particulaActiva.emocion === emocion) {
-      alpha = 28;
+      alpha = 52;
     }
 
     dibujarManchaBlob(grupo, grupo[0].baseColor, alpha);
@@ -432,7 +433,7 @@ function dibujarManchaBlob(grupo, baseColor, alpha) {
   noStroke();
 
   for (let capa = 0; capa < 3; capa++) {
-    const alphaCapa = alpha * (0.45 - capa * 0.1);
+    const alphaCapa = alpha * (0.52 - capa * 0.11);
     fill(red(baseColor), green(baseColor), blue(baseColor), alphaCapa);
 
     beginShape();
@@ -502,11 +503,11 @@ function dibujarPanelInfo(particula) {
     `Coordenadas: ${redondear(particula.xOriginal)}, ${redondear(particula.yOriginal)}`,
   ];
 
-  const padding = 12;
-  const altoLinea = 18;
+  const padding = 14;
+  const altoLinea = 21;
   let anchoCaja = 0;
 
-  textSize(13);
+  textSize(15);
   textAlign(LEFT, TOP);
 
   for (const linea of lineas) {
@@ -773,3 +774,4 @@ function centroide(puntos) {
     y: sumaY / puntos.length,
   };
 }
+
